@@ -46,7 +46,7 @@ faHouse.style.fontSize = "3rem";
 let initialOrderCount = 0;
 let numberClicked = 0;
 let clickedIndex = 0;
-const orderKeys = [];
+let orderKeys = [];
 let fetchedData = {};
 newOrderCounter.textContent = initialOrderCount;
 newMessageCounter.textContent = initialOrderCount;
@@ -77,6 +77,7 @@ ordersBack.addEventListener("click", () => {
   custSelection.innerHTML = "";
   ordersDiv.classList.add("fadeDivIn2");
   customerBox.classList.add("fadeDivIn");
+  refreshOrders.classList.remove("hidden");
 });
 
 ordersDiv.addEventListener("click", (e) => {
@@ -92,6 +93,7 @@ ordersDiv.addEventListener("click", (e) => {
     ordersBox.classList.add("hidden");
   }
   customerRenderLoop();
+  refreshOrders.classList.add("hidden");
 });
 
 const customerRenderLoop = () => {
@@ -140,7 +142,6 @@ const customerRenderLoop = () => {
     Object.values(fetchedData)[clickedIndex - 1].flavorAmounts;
   console.log(customerPicks);
   for (const data of Object.entries(customerPicks)) {
-    console.log(data.toString());
     const str = data.toString().replace(",", ": ");
     const str2 = str.charAt(0).toUpperCase() + str.slice(1);
     custSelection.innerHTML += `<p class='cust-selected'>${str2}</p>`;
@@ -150,7 +151,9 @@ const customerRenderLoop = () => {
 refreshOrders.addEventListener("click", () => {
   arrowsRefresh.classList.add("turn");
   ordersDiv.innerHTML = "";
+  orderKeys = [];
   orderFetcher();
+
   setTimeout(() => {
     arrowsRefresh.classList.remove("turn");
   }, 1500);
@@ -159,8 +162,6 @@ refreshOrders.addEventListener("click", () => {
 const orderLoop = (data) => {
   const orderLength = Object.values(data).length;
   localStorage.setItem("newOrder", orderLength);
-
-  customerBox.classList.add("hidden");
 
   let counter = 1;
   for (let i = 0; i < orderLength; i++) {
@@ -177,6 +178,7 @@ const orderLoop = (data) => {
     orderKeys.push(Object.keys(data)[i]);
   }
 };
+
 const orderFetcher = async () => {
   const response = await fetch(
     "https://snelle-vape-default-rtdb.europe-west1.firebasedatabase.app/Bestellingen.json"
