@@ -362,12 +362,14 @@
   left: 2.5%;
   height: 5rem;
   margin-top: 2rem;
-  margin-bottom: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
   cursor: pointer;
+}
+.box-1 {
+  margin-bottom: 3rem;
 }
 
 .box:hover {
