@@ -93,7 +93,7 @@
   cursor: pointer;
 }
 
-.message {
+.messages {
   position: absolute;
   width: 80%;
   left: 10%;
@@ -611,6 +611,55 @@
   z-index: 100;
   width: 4rem;
   font-family: "Archivo Black", sans-serif;
+}
+
+.messages-box {
+  position: absolute;
+  height: 40rem;
+  width: 60%;
+  left: 20%;
+  top: 10rem;
+  background-color: rgb(0, 0, 0);
+  border: 2px solid rgb(68, 89, 233);
+  border-radius: 0.8rem;
+  box-shadow: 0px 0px 10px rgba(68, 89, 233, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 3rem;
+  padding-left: 2rem;
+  color: white;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 3rem;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.messages-list {
+  position: absolute;
+  left: 20%;
+  height: 35rem;
+  width: 60%;
+}
+
+.message {
+  position: relative;
+  top: 2rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
+  cursor: pointer;
+  border: 2px solid rgb(68, 89, 233);
+  border-radius: 0.8rem;
+  box-shadow: 0px 0px 10px rgba(68, 89, 233, 1);
+}
+.email-name {
+  font-size: 1.5rem;
+}
+.mail-counter {
+  font-size: 1.5rem;
 }
 
 @media only screen and (max-width: 1550px) {

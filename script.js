@@ -5,7 +5,7 @@ const home = document.querySelector(".home");
 const faHouse = document.querySelector(".fa-house");
 const stats = document.querySelector(".stats");
 const faChartColumn = document.querySelector(".fa-chart-column");
-const message = document.querySelector(".message");
+const message = document.querySelector(".messages");
 const faEnvelope = document.querySelector(".fa-envelope");
 const earnings = document.querySelector(".earnings");
 const faSackDollar = document.querySelector(".fa-sack-dollar");
@@ -18,6 +18,7 @@ const messagesPanel = document.querySelector(".messages-panel");
 const earningsPanel = document.querySelector(".earnings-panel");
 const ordersBox = document.querySelector(".orders-box");
 const ordersDiv = document.querySelector(".obx-orders");
+const messagesDiv = document.querySelector(".messages-list");
 const refreshOrders = document.querySelector(".refresh1");
 const arrowsRefresh = document.querySelector(".fa-arrows-rotate");
 const customerBox = document.querySelector(".customer-box");
@@ -51,18 +52,49 @@ let fetchedData = {};
 newOrderCounter.textContent = initialOrderCount;
 newMessageCounter.textContent = initialOrderCount;
 ordersPanel.classList.add("hidden");
-messagesPanel.classList.add("hidden");
+// messagesPanel.classList.add("hidden");
 earningsPanel.classList.add("hidden");
 ////////
 
+//Check for incoming new orders
 const localLength1 = localStorage.getItem("newOrder");
 const localLength2 = localStorage.getItem("newOrder2");
-
 if (localLength2 < localLength1) {
   newOrderCounter.textContent = +(localLength1 - localLength2);
 }
 localStorage.setItem("newOrder2", localLength1);
 
+//Message fetcher
+
+const messageLoop = (data) => {
+  const orderLength = Object.values(data).length;
+  console.log(Object.values(data)[0].email);
+  let counter = 1;
+  for (let i = 0; i < orderLength; i++) {
+    messagesDiv.innerHTML += `<div class="message ${
+      "message" + "-" + (i + 1)
+    }"><p class="mail-counter ${
+      Object.keys(data)[i]
+    }">${counter}</p> <p class="email-name ${Object.keys(data)[i]}">By: ${
+      Object.values(data)[0].email
+    }</p></div>`;
+    counter++;
+  }
+};
+
+const messageFetcher = async () => {
+  const response = await fetch(
+    "https://snelle-vape-default-rtdb.europe-west1.firebasedatabase.app/ContactFormulier.json"
+  );
+  if (!response.ok) {
+    throw new Error("Could not fetch orders from server");
+  }
+  const data = await response.json();
+  messageLoop(data);
+};
+messageFetcher();
+
+//Go from order back to orderlist
 ordersBack.addEventListener("click", () => {
   customerBox.classList.add("hidden");
   ordersDiv.classList.remove("hidden");
@@ -80,6 +112,7 @@ ordersBack.addEventListener("click", () => {
   refreshOrders.classList.remove("hidden");
 });
 
+//Render the selected order
 ordersDiv.addEventListener("click", (e) => {
   orderKeys.map((item, i) => {
     if (e.target.classList.contains(item)) {
@@ -96,6 +129,7 @@ ordersDiv.addEventListener("click", (e) => {
   refreshOrders.classList.add("hidden");
 });
 
+//Render order to screen
 const customerRenderLoop = () => {
   const clickedBox = Object.values(fetchedData)[clickedIndex - 1];
   custNaam.textContent = `Naam: 
@@ -148,17 +182,18 @@ const customerRenderLoop = () => {
   }
 };
 
+//Refresh orders
 refreshOrders.addEventListener("click", () => {
   arrowsRefresh.classList.add("turn");
   ordersDiv.innerHTML = "";
   orderKeys = [];
   orderFetcher();
-
   setTimeout(() => {
     arrowsRefresh.classList.remove("turn");
   }, 1500);
 });
 
+//Fetch and render orders
 const orderLoop = (data) => {
   const orderLength = Object.values(data).length;
   localStorage.setItem("newOrder", orderLength);
@@ -191,6 +226,8 @@ const orderFetcher = async () => {
   fetchedData = data;
 };
 orderFetcher();
+
+//Handle Animation Side Bar
 
 cloudLogo.addEventListener("mouseover", () => {
   const int1 = Math.floor(Math.random() * 255 + 1);
