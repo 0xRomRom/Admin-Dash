@@ -28,9 +28,9 @@
 .side-panel {
   position: absolute;
   width: 5rem;
-  top: 2.5vh;
-  left: 1rem;
-  height: 95vh;
+  top: 4rem;
+  left: 1vw;
+  height: 55rem;
   background-color: rgb(68, 89, 233);
   border-radius: 1rem;
   z-index: 5;
@@ -148,9 +148,9 @@
 .home-panel {
   position: absolute;
   width: 98vw;
-  top: 2.5vh;
-  left: 1rem;
-  height: 95vh;
+  top: 4rem;
+  left: 1vw;
+  height: 55rem;
   background: url("./img/smoke.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -172,7 +172,7 @@
 
 .new-orders {
   position: absolute;
-  left: 41vw;
+  left: 38vw;
   top: 5.5rem;
   width: 25rem;
   height: 4rem;
@@ -223,7 +223,7 @@
   top: 25rem;
   left: 30%;
   width: 40vw;
-  height: 15rem;
+  min-height: 15rem;
   background-color: rgba(68, 89, 233, 0.6);
   box-shadow: 0px 0px 10px rgba(68, 89, 233, 1);
   z-index: 10;
@@ -279,9 +279,9 @@
 .orders-panel {
   position: absolute;
   width: 98vw;
-  top: 2.5vh;
+  top: 4rem;
   left: 1rem;
-  height: 95vh;
+  height: 55rem;
   background: url("./img/smoke2.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -320,8 +320,8 @@
 .orders-box {
   position: absolute;
   height: 40rem;
-  width: 70rem;
-  left: 20vw;
+  width: 60%;
+  left: 20%;
   top: 10rem;
   background-color: rgb(0, 0, 0);
   border: 2px solid rgb(68, 89, 233);
@@ -562,9 +562,9 @@
 .messages-panel {
   position: absolute;
   width: 98vw;
-  top: 2.5vh;
+  top: 4rem;
   left: 1rem;
-  height: 95vh;
+  height: 55rem;
   background: url("./img/smoke3.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -589,9 +589,9 @@
 .earnings-panel {
   position: absolute;
   width: 98vw;
-  top: 2.5vh;
+  top: 4rem;
   left: 1rem;
-  height: 95vh;
+  height: 55rem;
   background: url("./img/smoke4.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -611,4 +611,19 @@
   z-index: 100;
   width: 4rem;
   font-family: "Archivo Black", sans-serif;
+}
+
+@media only screen and (max-width: 1550px) {
+  .new-orders {
+    width: 20rem;
+    font-size: 0.6rem;
+    padding: 0rem 0.3rem 0rem 0.3rem;
+    height: 3.5rem;
+  }
+  .new-messages {
+    width: 20rem;
+    font-size: 0.6rem;
+    padding: 0rem 0.3rem 0rem 0.3rem;
+    height: 3.5rem;
+  }
 }
