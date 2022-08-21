@@ -24,6 +24,7 @@ const refreshMessages = document.querySelector(".refresh2");
 const arrowsRefresh = document.querySelector(".fa-arrows-rotate");
 const customerBox = document.querySelector(".customer-box");
 const newOrdersButton = document.querySelector(".new-orders");
+const newMessagesButton = document.querySelector(".new-messages");
 const closeMessage = document.querySelector(".close-message");
 const selectedMessage = document.querySelector(".selected-message");
 const emailSender = document.querySelector(".email-sender");
@@ -63,6 +64,14 @@ ordersPanel.classList.add("hidden");
 messagesPanel.classList.add("hidden");
 earningsPanel.classList.add("hidden");
 ////////
+
+//Check for incoming new messages
+const messageLength1 = localStorage.getItem("newMessage");
+const messageLength2 = localStorage.getItem("newMessage2");
+if (messageLength2 < messageLength1) {
+  newMessageCounter.textContent = +(messageLength1 - messageLength2);
+}
+localStorage.setItem("newMessage2", messageLength1);
 
 //Check for incoming new orders
 const localLength1 = localStorage.getItem("newOrder");
@@ -118,6 +127,9 @@ messagesDiv.addEventListener("click", (e) => {
 //Message fetcher
 const messageLoop = (data) => {
   const orderLength = Object.values(data).length;
+  console.log(orderLength);
+  localStorage.setItem("newMessage", orderLength);
+
   let counter = 1;
   for (let i = 0; i < orderLength; i++) {
     messagesDiv.innerHTML += `<div class="message ${
@@ -359,6 +371,25 @@ newOrdersButton.addEventListener("click", () => {
   ordersPanel.classList.remove("hidden");
   ordersPanel.classList.add("fadeDivIn");
   newOrderCounter.textContent = 0;
+});
+
+newMessagesButton.addEventListener("click", () => {
+  menuBoxHandler(
+    message,
+    faEnvelope,
+    home,
+    earnings,
+    stats,
+    faHouse,
+    faChartColumn,
+    faSackDollar
+  );
+  ordersPanel.classList.add("hidden");
+  earningsPanel.classList.add("hidden");
+  homePanel.classList.add("hidden");
+  messagesPanel.classList.remove("hidden");
+  messagesPanel.classList.add("fadeDivIn");
+  newMessageCounter.textContent = 0;
 });
 
 message.addEventListener("click", () => {
