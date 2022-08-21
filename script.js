@@ -64,8 +64,15 @@ messagesPanel.classList.add("hidden");
 earningsPanel.classList.add("hidden");
 ////////
 
-//Refresh messages
+//Check for incoming new orders
+const localLength1 = localStorage.getItem("newOrder");
+const localLength2 = localStorage.getItem("newOrder2");
+if (localLength2 < localLength1) {
+  newOrderCounter.textContent = +(localLength1 - localLength2);
+}
+localStorage.setItem("newOrder2", localLength1);
 
+//Refresh messages
 refreshMessages.addEventListener("click", () => {
   refreshMessages.classList.add("turn");
   messagesDiv.innerHTML = "";
@@ -76,14 +83,6 @@ refreshMessages.addEventListener("click", () => {
   }, 1500);
 });
 
-//Check for incoming new orders
-const localLength1 = localStorage.getItem("newOrder");
-const localLength2 = localStorage.getItem("newOrder2");
-if (localLength2 < localLength1) {
-  newOrderCounter.textContent = +(localLength1 - localLength2);
-}
-localStorage.setItem("newOrder2", localLength1);
-
 //Close message
 closeMessage.addEventListener("click", () => {
   selectedMessage.classList.add("hidden");
@@ -93,9 +92,9 @@ closeMessage.addEventListener("click", () => {
   senderText.textContent = "";
 });
 
+//Display sender and message
 const messagesRenderLoop = () => {
   const clickedBox = Object.values(fetchedMessages)[clickedIndex2 - 1];
-  console.log(clickedBox);
   emailSender.textContent = clickedBox.email;
   senderText.textContent = clickedBox.bericht;
 };
