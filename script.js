@@ -17,6 +17,7 @@ const ordersPanel = document.querySelector(".orders-panel");
 const messagesPanel = document.querySelector(".messages-panel");
 const earningsPanel = document.querySelector(".earnings-panel");
 const ordersBox = document.querySelector(".orders-box");
+const ordersBoxBg = document.querySelector(".orders-box-bg");
 const ordersDiv = document.querySelector(".obx-orders");
 const messagesDiv = document.querySelector(".messages-list");
 const refreshOrders = document.querySelector(".refresh1");
@@ -173,6 +174,7 @@ ordersBack.addEventListener("click", () => {
   ordersDiv.classList.add("fadeDivIn2");
   customerBox.classList.add("fadeDivIn");
   refreshOrders.classList.remove("hidden");
+  ordersBoxBg.classList.remove("hidden");
 });
 
 //Render the selected order
@@ -186,9 +188,11 @@ ordersDiv.addEventListener("click", (e) => {
   if (clickedIndex > 0) {
     customerBox.classList.remove("hidden");
     ordersDiv.classList.add("hidden");
+    ordersBoxBg.classList.add("hidden");
     ordersBox.classList.add("hidden");
   }
   customerRenderLoop();
+
   refreshOrders.classList.add("hidden");
 });
 
