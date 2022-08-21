@@ -20,9 +20,14 @@ const ordersBox = document.querySelector(".orders-box");
 const ordersDiv = document.querySelector(".obx-orders");
 const messagesDiv = document.querySelector(".messages-list");
 const refreshOrders = document.querySelector(".refresh1");
+const refreshMessages = document.querySelector(".refresh2");
 const arrowsRefresh = document.querySelector(".fa-arrows-rotate");
 const customerBox = document.querySelector(".customer-box");
 const newOrdersButton = document.querySelector(".new-orders");
+const closeMessage = document.querySelector(".close-message");
+const selectedMessage = document.querySelector(".selected-message");
+const emailSender = document.querySelector(".email-sender");
+const senderText = document.querySelector(".sender-text");
 
 const custNaam = document.querySelector(".cust-naam");
 const custPlaats = document.querySelector(".cust-plaats");
@@ -47,12 +52,15 @@ faHouse.style.fontSize = "3rem";
 let initialOrderCount = 0;
 let numberClicked = 0;
 let clickedIndex = 0;
+let clickedIndex2 = 0;
 let orderKeys = [];
+let messagesKeys = [];
 let fetchedData = {};
+let fetchedMessages = {};
 newOrderCounter.textContent = initialOrderCount;
 newMessageCounter.textContent = initialOrderCount;
 ordersPanel.classList.add("hidden");
-// messagesPanel.classList.add("hidden");
+messagesPanel.classList.add("hidden");
 earningsPanel.classList.add("hidden");
 ////////
 
@@ -64,8 +72,39 @@ if (localLength2 < localLength1) {
 }
 localStorage.setItem("newOrder2", localLength1);
 
-//Message fetcher
+//Close message
+closeMessage.addEventListener("click", () => {
+  selectedMessage.classList.add("hidden");
+  messagesDiv.classList.remove("hidden");
+  refreshMessages.classList.remove("hidden");
+  emailSender.textContent = "";
+  senderText.textContent = "";
+});
 
+const messagesRenderLoop = () => {
+  const clickedBox = Object.values(fetchedMessages)[clickedIndex2 - 1];
+  console.log(clickedBox);
+  emailSender.textContent = clickedBox.email;
+  senderText.textContent = clickedBox.bericht;
+};
+
+//Render the selected order
+messagesDiv.addEventListener("click", (e) => {
+  messagesKeys.map((item, i) => {
+    if (e.target.classList.contains(item)) {
+      clickedIndex2 = i + 1;
+    }
+  });
+  if (clickedIndex2 === 0) return;
+  if (clickedIndex2 > 0) {
+    messagesDiv.classList.add("hidden");
+    selectedMessage.classList.remove("hidden");
+  }
+  messagesRenderLoop();
+  refreshMessages.classList.add("hidden");
+});
+
+//Message fetcher
 const messageLoop = (data) => {
   const orderLength = Object.values(data).length;
   console.log(Object.values(data)[0].email);
@@ -76,9 +115,10 @@ const messageLoop = (data) => {
     }"><p class="mail-counter ${
       Object.keys(data)[i]
     }">${counter}</p> <p class="email-name ${Object.keys(data)[i]}">By: ${
-      Object.values(data)[0].email
+      Object.values(data)[i].email
     }</p></div>`;
     counter++;
+    messagesKeys.push(Object.keys(data)[i]);
   }
 };
 
@@ -91,6 +131,7 @@ const messageFetcher = async () => {
   }
   const data = await response.json();
   messageLoop(data);
+  fetchedMessages = data;
 };
 messageFetcher();
 
