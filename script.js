@@ -64,6 +64,18 @@ messagesPanel.classList.add("hidden");
 earningsPanel.classList.add("hidden");
 ////////
 
+//Refresh messages
+
+refreshMessages.addEventListener("click", () => {
+  refreshMessages.classList.add("turn");
+  messagesDiv.innerHTML = "";
+  messagesKeys = [];
+  messageFetcher();
+  setTimeout(() => {
+    refreshMessages.classList.remove("turn");
+  }, 1500);
+});
+
 //Check for incoming new orders
 const localLength1 = localStorage.getItem("newOrder");
 const localLength2 = localStorage.getItem("newOrder2");
@@ -107,7 +119,6 @@ messagesDiv.addEventListener("click", (e) => {
 //Message fetcher
 const messageLoop = (data) => {
   const orderLength = Object.values(data).length;
-  console.log(Object.values(data)[0].email);
   let counter = 1;
   for (let i = 0; i < orderLength; i++) {
     messagesDiv.innerHTML += `<div class="message ${
